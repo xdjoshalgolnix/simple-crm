@@ -10,8 +10,10 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import com.sample.crm.entity.cpk.RoleAccessControlId;
 
+import lombok.Data;
 
 
+@Data
 @Entity(name = "role_accesscontrol")
 @DynamicUpdate
 @IdClass(value = RoleAccessControlId.class)
@@ -24,24 +26,4 @@ public class RoleAccessControl
   @Id
   @Column(nullable = false)
   private String nouns;
-
-  public long getRoleId()
-  {
-    return roleId;
-  }
-
-  public void setRoleId(long roleId)
-  {
-    this.roleId = roleId;
-  }
-  
-  public String getNouns()
-  {
-    return nouns;
-  }
-
-  public void setNouns(String nouns)
-  {
-    this.nouns = nouns;
-  }
 }

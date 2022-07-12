@@ -10,6 +10,9 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.DynamicUpdate;
 
+import lombok.Data;
+
+@Data
 @DynamicUpdate
 @Entity(name = "company")
 public class Company
@@ -35,73 +38,4 @@ public class Company
   @Column(name = "updated_at", nullable = false)
   private Date updatedAt;
 
-  public Long getId()
-  {
-    return id;
-  }
-
-  public void setId(Long id)
-  {
-    this.id = id;
-  }
-
-  public String getName()
-  {
-    return name;
-  }
-
-  public void setName(String name)
-  {
-    this.name = name;
-  }
-
-  public String getAddress()
-  {
-    return address;
-  }
-
-  public void setAddress(String address)
-  {
-    this.address = address;
-  }
-
-  public String getCreatedBy()
-  {
-    return createdBy;
-  }
-
-  public void setCreatedBy(String createdBy)
-  {
-    this.createdBy = createdBy;
-  }
-
-  public Date getCreatedAt()
-  {
-    return createdAt;
-  }
-
-  public void setCreatedAt(Date createdAt)
-  {
-    this.createdAt = createdAt;
-  }
-
-  public String getUpdatedBy()
-  {
-    return updatedBy;
-  }
-
-  public void setUpdatedBy(String updatedBy)
-  {
-    this.updatedBy = updatedBy;
-  }
-
-  public Date getUpdatedAt()
-  {
-    return updatedAt;
-  }
-
-  public void setUpdatedAt(Date updatedAt)
-  {
-    this.updatedAt = updatedAt;
-  }
 }

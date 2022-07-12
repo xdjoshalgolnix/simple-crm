@@ -1,7 +1,6 @@
 package com.sample.crm.filter;
 
 import java.io.IOException;
-import java.lang.invoke.MethodHandles;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -10,8 +9,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
@@ -22,10 +19,11 @@ import com.sample.crm.exception.APIException;
 import com.sample.crm.services.AccessControlService;
 import com.sample.crm.services.UserService;
 
+//@Slf4j
 @Component
 public class ValidateTokenFilter implements Filter
 {
-  private Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+//  private Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
   
   @Autowired
   private UserService userService;

@@ -3,6 +3,13 @@ package com.sample.crm.bean;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonInclude(value = Include.NON_NULL)
 public class ResponseBean<T>
 {
@@ -12,51 +19,9 @@ public class ResponseBean<T>
   
   private T retData;
   
-  public ResponseBean()
-  {
-    
-  }
-  
   public ResponseBean(final String retCode, final String retInfo)
   {
     this.retCode = retCode;
     this.retInfo = retInfo;
-  }
-  
-  public ResponseBean(final String retCode, final String retInfo, final T retData)
-  {
-    this.retCode = retCode;
-    this.retInfo = retInfo;
-    this.retData = retData;
-  }
-
-  public String getRetCode()
-  {
-    return retCode;
-  }
-
-  public void setRetCode(String retCode)
-  {
-    this.retCode = retCode;
-  }
-
-  public String getRetInfo()
-  {
-    return retInfo;
-  }
-
-  public void setRetInfo(String retInfo)
-  {
-    this.retInfo = retInfo;
-  }
-
-  public T getRetData()
-  {
-    return retData;
-  }
-
-  public void setRetData(T retData)
-  {
-    this.retData = retData;
   }
 }

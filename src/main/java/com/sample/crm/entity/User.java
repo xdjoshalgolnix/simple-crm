@@ -16,6 +16,9 @@ import javax.persistence.OneToOne;
 
 import com.sample.crm.constant.APIConstant;
 
+import lombok.Data;
+
+@Data
 @Entity(name = "user")
 public class User implements Serializable
 {
@@ -46,84 +49,4 @@ public class User implements Serializable
   private List<RoleAccessControl> accessControls;
   
   private int state = APIConstant.STATE_ENABLE;
-
-  public Long getId()
-  {
-    return id;
-  }
-
-  public void setId(Long id)
-  {
-    this.id = id;
-  }
-
-  public String getUserId()
-  {
-    return userId;
-  }
-
-  public void setUserId(String userId)
-  {
-    this.userId = userId;
-  }
-
-  public String getHashpwd()
-  {
-    return hashpwd;
-  }
-
-  public void setHashpwd(String hashpwd)
-  {
-    this.hashpwd = hashpwd;
-  }
-
-  public String getName()
-  {
-    return name;
-  }
-
-  public void setName(String name)
-  {
-    this.name = name;
-  }
-
-  public long getRoleId()
-  {
-    return roleId;
-  }
-
-  public void setRoleId(long roleId)
-  {
-    this.roleId = roleId;
-  }
-
-  public int getState()
-  {
-    return state;
-  }
-
-  public void setState(int state)
-  {
-    this.state = state;
-  }
-
-  public Role getRole()
-  {
-    return role;
-  }
-
-  public void setRole(Role role)
-  {
-    this.role = role;
-  }
-
-  public List<RoleAccessControl> getAccessControls()
-  {
-    return accessControls;
-  }
-
-  public void setAccessControls(List<RoleAccessControl> accessControls)
-  {
-    this.accessControls = accessControls;
-  }
 }
