@@ -7,11 +7,17 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.sample.crm.util.DateTimeUtils;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonInclude(value = Include.NON_NULL)
 public class CompanyResponse
 {

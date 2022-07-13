@@ -71,11 +71,11 @@
 		    <artifactId>lombok</artifactId>
 		</dependency>
 		
-<!-- 		<dependency> -->
-<!-- 		    <groupId>com.baomidou</groupId> -->
-<!-- 		    <artifactId>mybatis-plus-boot-starter</artifactId> -->
-<!-- 		    <version>3.5.1</version> -->
-<!-- 		</dependency> -->
+		<dependency>
+		    <groupId>com.baomidou</groupId>
+		    <artifactId>mybatis-plus-boot-starter</artifactId>
+		    <version>3.5.1</version>
+		</dependency>
 
 		<!-- common-lib -->
 		<dependency>
