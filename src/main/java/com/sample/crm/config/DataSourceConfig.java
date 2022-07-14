@@ -3,6 +3,8 @@ package com.sample.crm.config;
 
 import javax.sql.DataSource;
 
+import org.dozer.DozerBeanMapper;
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -29,5 +31,10 @@ public class DataSourceConfig
   @Bean(name = "h2jdbc")
   public JdbcTemplate jdbcTemplate1(@Qualifier("h2") DataSource ds) {
    return new JdbcTemplate(ds);
+  }
+  
+  @Bean
+  public Mapper mapper() {
+   return new DozerBeanMapper();
   }
 }

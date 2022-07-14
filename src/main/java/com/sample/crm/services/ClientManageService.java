@@ -8,6 +8,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.apache.commons.lang3.StringUtils;
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,9 @@ public class ClientManageService
   @Autowired
   private CompanyRepository companyRepository;
   
+  @Autowired
+  private Mapper mapper;
+  
   @Transactional(rollbackOn = APIException.class)
   public List<ClientResponse> createClients(List<ClientRequest> request, UserInfo userInfo) throws APIException
   {
@@ -52,11 +56,7 @@ public class ClientManageService
       throw new APIException(ErrorCode.BAD_REQUEST_SCH1, StringUtils.join("company_id = ", request.getCompanyId() + " not existed, please check"));
     }
     
-    Client entity = new Client();
-    entity.setName(request.getName());
-    entity.setCompanyId(request.getCompanyId());
-    entity.setEmail(request.getEmail());
-    entity.setPhone(request.getPhone());
+    Client entity = mapper.map(request, Client.class);
     entity.setCreatedBy(userInfo.getUserId());
     entity.setCreatedAt(new Date());
     entity.setUpdatedBy(userInfo.getUserId());
@@ -64,16 +64,7 @@ public class ClientManageService
     
     entity = clientRepository.save(entity);
     
-    ClientResponse response = new ClientResponse();
-    response.setId(entity.getId());
-    response.setCompanyId(entity.getCompanyId());
-    response.setName(entity.getName());
-    response.setEmail(entity.getEmail());        
-    response.setPhone(entity.getPhone());
-    response.setCreatedBy(entity.getCreatedBy());
-    response.setCreatedAt(entity.getCreatedAt());
-    response.setUpdatedBy(entity.getUpdatedBy());
-    response.setUpdatedAt(entity. getUpdatedAt());
+    ClientResponse response = mapper.map(entity, ClientResponse.class);
     
     return response;
   }
@@ -122,16 +113,7 @@ public class ClientManageService
     
     entity = clientRepository.save(entity);
     
-    ClientResponse response = new ClientResponse();
-    response.setId(entity.getId());
-    response.setCompanyId(entity.getCompanyId());
-    response.setName(entity.getName());
-    response.setEmail(entity.getEmail());        
-    response.setPhone(entity.getPhone());
-    response.setCreatedBy(entity.getCreatedBy());
-    response.setCreatedAt(entity.getCreatedAt());
-    response.setUpdatedBy(entity.getUpdatedBy());
-    response.setUpdatedAt(entity. getUpdatedAt());
+    ClientResponse response = mapper.map(entity, ClientResponse.class);
     
     return response;
   }
@@ -153,28 +135,7 @@ public class ClientManageService
     List<Client> list = clientRepository.findAll();
     List<ClientResponse> response = new ArrayList<>();
     list.forEach( n -> {
-      ClientResponse entry = new ClientResponse();
-      entry.setId(n.getId());
-      entry.setCompanyId(n.getCompanyId());
-      entry.setName(n.getName());
-      if ( null != n.getEmail() )
-      {
-        entry.setEmail(n.getEmail());        
-      }
-      if ( null != n.getPhone() )
-      {
-        entry.setPhone(n.getPhone());
-      }
-      entry.setCreatedBy(n.getCreatedBy());
-      entry.setCreatedAt(n.getCreatedAt());
-      if ( null != n.getUpdatedBy() )
-      {
-        entry.setUpdatedBy(n.getUpdatedBy());
-      }
-      if ( null != n.getUpdatedAt() )
-      {
-        entry.setUpdatedAt(n. getUpdatedAt());
-      }
+      ClientResponse entry = mapper.map(n, ClientResponse.class);
       response.add(entry);
     });
     

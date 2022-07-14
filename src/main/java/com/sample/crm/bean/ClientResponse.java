@@ -9,12 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sample.crm.util.DateTimeUtils;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(value = Include.NON_NULL)
@@ -44,5 +42,6 @@ public class ClientResponse
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeUtils.DATE_TIME_FORMAT, timezone = DateTimeUtils.SYSTEM_TZ)
   @JsonProperty("updated_at")
   private Date updatedAt;
+  
 }
 

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,13 +25,14 @@ public class CompanyManageService
   @Autowired
   private CompanyRepository companyRepository;
   
+  @Autowired
+  private Mapper mapper;
+  
   public CompanyResponse createCompany(CompanyRequest request, UserInfo userInfo) throws APIException
   {
     vaildCompanyRequest(request);
     
-    Company entity = new Company();
-    entity.setName(request.getName());
-    entity.setAddress(request.getAddress());
+    Company entity = mapper.map(request, Company.class);
     entity.setCreatedBy(userInfo.getUserId());
     entity.setCreatedAt(new Date());
     entity.setUpdatedBy(userInfo.getUserId());
@@ -38,14 +40,7 @@ public class CompanyManageService
     
     entity = companyRepository.save(entity);
     
-    CompanyResponse response = new CompanyResponse();
-    response.setId(entity.getId());
-    response.setName(entity.getName());
-    response.setAddress(entity.getAddress());
-    response.setCreatedBy(entity.getCreatedBy());
-    response.setCreatedAt(entity.getCreatedAt());
-    response.setUpdatedBy(entity.getUpdatedBy());
-    response.setUpdatedAt(entity. getUpdatedAt());
+    CompanyResponse response = mapper.map(entity, CompanyResponse.class);
     
     return response;
   }
@@ -76,14 +71,7 @@ public class CompanyManageService
     
     entity = companyRepository.save(entity);
     
-    CompanyResponse response = new CompanyResponse();
-    response.setId(entity.getId());
-    response.setName(entity.getName());
-    response.setAddress(entity.getAddress());
-    response.setCreatedBy(entity.getCreatedBy());
-    response.setCreatedAt(entity.getCreatedAt());
-    response.setUpdatedBy(entity.getUpdatedBy());
-    response.setUpdatedAt(entity. getUpdatedAt());
+    CompanyResponse response = mapper.map(entity, CompanyResponse.class);
     
     return response;
   }
@@ -105,23 +93,7 @@ public class CompanyManageService
     List<Company> list = companyRepository.findAll();
     List<CompanyResponse> response = new ArrayList<>();
     list.forEach( n -> {
-      CompanyResponse entry = new CompanyResponse();
-      entry.setId(n.getId());
-      entry.setName(n.getName());
-      if ( null != n.getAddress() )
-      {
-        entry.setAddress(n.getAddress());        
-      }
-      entry.setCreatedBy(n.getCreatedBy());
-      entry.setCreatedAt(n.getCreatedAt());
-      if ( null != n.getUpdatedBy() )
-      {
-        entry.setUpdatedBy(n.getUpdatedBy());
-      }
-      if ( null != n.getUpdatedAt() )
-      {
-        entry.setUpdatedAt(n. getUpdatedAt());
-      }
+      CompanyResponse entry = mapper.map(n, CompanyResponse.class);
       response.add(entry);
     });
     

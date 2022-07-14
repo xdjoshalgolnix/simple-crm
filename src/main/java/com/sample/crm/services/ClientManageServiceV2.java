@@ -8,12 +8,13 @@ import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
 import org.apache.commons.lang3.StringUtils;
+import org.dozer.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.sample.crm.bean.ClientRequest;
 import com.sample.crm.bean.ClientResponse;
-import com.sample.crm.bean.ClientResponse.ClientResponseBuilder;
 import com.sample.crm.bean.UserInfo;
 import com.sample.crm.exception.APIException;
 import com.sample.crm.exception.ErrorCode;
@@ -31,6 +32,9 @@ public class ClientManageServiceV2
   
   @Resource
   private CompanyMapper companyMapper;
+  
+  @Autowired
+  private Mapper mapper;
   
   @Transactional(rollbackOn = APIException.class)
   public List<ClientResponse> createClients(List<ClientRequest> request, UserInfo userInfo) throws APIException
@@ -53,30 +57,15 @@ public class ClientManageServiceV2
       throw new APIException(ErrorCode.BAD_REQUEST_SCH1, StringUtils.join("company_id = ", request.getCompanyId() + " not existed, please check"));
     }
     
-    Client entity = Client.builder()
-        .name(request.getName())
-        .companyId(request.getCompanyId())
-        .email(request.getEmail())
-        .phone(request.getPhone())
-        .createdBy(userInfo.getUserId())
-        .createdAt(new Date())
-        .updatedBy(userInfo.getUserId())
-        .updatedAt(new Date())
-        .build();
+    Client entity = mapper.map(request, Client.class);
+    entity.setCreatedBy(userInfo.getUserId());
+    entity.setCreatedAt(new Date());
+    entity.setUpdatedBy(userInfo.getUserId());
+    entity.setUpdatedAt(new Date());
     
     clientMapper.insert(entity);
     
-    ClientResponse response = ClientResponse.builder()
-        .id(entity.getId())
-        .companyId(entity.getCompanyId())
-        .name(entity.getName())
-        .email(entity.getEmail())
-        .phone(entity.getPhone())
-        .createdBy(entity.getCreatedBy())
-        .createdAt(entity.getCreatedAt())
-        .updatedBy(entity.getUpdatedBy())
-        .updatedAt(entity. getUpdatedAt())
-        .build();
+    ClientResponse response = mapper.map(entity, ClientResponse.class);
     
     return response;
   }
@@ -124,17 +113,7 @@ public class ClientManageServiceV2
     
     clientMapper.updateById(entity);
     
-    ClientResponse response = ClientResponse.builder()
-        .id(entity.getId())
-        .companyId(entity.getCompanyId())
-        .name(entity.getName())
-        .email(entity.getEmail())
-        .phone(entity.getPhone())
-        .createdBy(entity.getCreatedBy())
-        .createdAt(entity.getCreatedAt())
-        .updatedBy(entity.getUpdatedBy())
-        .updatedAt(entity. getUpdatedAt())
-        .build();
+    ClientResponse response = mapper.map(entity, ClientResponse.class);
     
     return response;
   }
@@ -157,28 +136,8 @@ public class ClientManageServiceV2
     
     List<ClientResponse> response = new ArrayList<>();
     list.forEach( n -> {
-      ClientResponseBuilder entry = ClientResponse.builder()
-          .id(n.getId())
-          .companyId(n.getCompanyId())
-          .name(n.getName());
-      if ( null != n.getEmail() )
-      { 
-        entry.email(n.getEmail());
-      }
-      if ( null != n.getPhone() )
-      {
-        entry.phone(n.getPhone());
-      }
-      entry.createdBy(n.getCreatedBy()).createdAt(n.getCreatedAt());
-      if ( null != n.getUpdatedBy() )
-      {
-        entry.updatedBy(n.getUpdatedBy());
-      }
-      if ( null != n.getUpdatedAt() )
-      {
-        entry.updatedAt(n.getUpdatedAt());
-      }
-      response.add(entry.build());
+      ClientResponse entry = mapper.map(n, ClientResponse.class);
+      response.add(entry);
     });
     
     return response;
